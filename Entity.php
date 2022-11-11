@@ -1,6 +1,28 @@
 <?php
     class Entity{
-        static public function createElementOfCSV($filename,$element){
+        static public function createElementOfCSV($filename, $element){
+            if(count($_POST)>0){
+                //make sure name is not already in the file
+                  $error ='';
+                  if(file_exists($filePath)){
+                    $fh = fopen($filePath, 'r'); //open file  in read mode
+                    while($line=fgets($fh)){
+                      if($_POST['element'] == trim($line)){
+                        $error='This already exists';
+                      }
+                    }
+                    fclose($fh); //close file
+                  }
+    
+                  if(strlen($error)>0) echo $error;
+                  else{
+                    // Add the name to the csv file
+                    $fh = fopen($filePath, 'a');
+                    fputs($fh,$_POST['element'].PHP_EOL);//php_eol = new line
+                    fclose($fh);
+                    exit();
+                  }
+            }
 
         }
         static public function modifyElementOfCSVFile($fileName, $line){
