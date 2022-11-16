@@ -1,7 +1,12 @@
 <?php
     class Entity{
-        static public function createElementOfCSV($filename,$element){
+        static public function createElementOfCSV($filename,$element1,$element2,$element3){
+            $element=$_GET;
+            $fh = fopen($filename, 'w');
 
+            $information = $element[$element1].';'.$element[$element2].';'.$element[$element3];
+            fputs($fh,$information."\n");
+            fclose($fh);
         }
         static public function modifyElementOfCSVFile($fileName, $line){
             /*$fh = fopen($fileName, 'r');
