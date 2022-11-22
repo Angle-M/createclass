@@ -19,6 +19,9 @@
   // AuthHelper::signin('users.csv',['email'=>'ccbroadus420@snoopingg.com','pass'=>'Mon3y0nMahm1nD']); // good user bad password
   // AuthHelper::signin('users.csv',['email'=>'ryryreynolds@mintmobz.ca','pass'=>'br34KinGaLltHeWalz']); // wrong email not registered
 
+  //SIGNOUT
+  // AuthHelper::signout();
+
 
 
 

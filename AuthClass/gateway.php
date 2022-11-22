@@ -18,9 +18,8 @@
     <div class="container">
       <div class="row">
         <?php
-          if(isset($_SESSION['error_msg'])){
-            echo $_SESSION['error_msg'];
-            // unset($_SESSION['error_msg']);
+          if(isset($_SESSION['msg'])){
+            echo $_SESSION['msg'];
           }
          ?>
         <hr />
