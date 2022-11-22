@@ -24,8 +24,7 @@
         while(!feof($h)){
           $line=explode(';',trim(fgets($h)));
           if(count($line)<2) continue;
-          if($line[0]==$tryEmail) die($_SESSION['error_msg'] = "$tryEmail.' is already registered. Please sign in.'");
-          // $_SESSION['error_msg'] = "$tryEmail.' is already registered. Please sign in.'";
+          if($line[0]==$tryEmail) die($_SESSION['error_msg'] = "$tryEmail is already registered. Please sign in.");
           header('location:gateway.php');
         }
         fclose($h);
@@ -41,28 +40,41 @@
 
     }
 
-  // static function signin(){
-  //   if(!file_exists('data.csv')) die('The user is not registered');
-  //   // 1. verify whether the email is already registered
-  //   $h=fopen('data.csv', 'r+');
-  //   while(!feof($h)){
-  //     $line=explode(';',trim(fgets($h)));
-  //     if(count($line)<2) continue;
-  //     if($line[0]==$_POST['email']){
-  //       if(!password_verify($_POST['pass'],$line[1])) {
-  //         die ('The password is not correct');
-  //       }else{
-  //         // start the session and send the user to the members page
-  //         session_start();
-  //         $_SESSION['name']=$line[2];
-  //         header('location: members.php');
-  //       }
-  //     }
-  //   }
-  //   fclose($h);
-  //   die('The email address is not registered');
-  //
-  //   }
+    static function signin($file, $data){
+      $found = 'not';
+      if(!file_exists($file)) {
+        $_SESSION['error_msg'] ='The user is not registered';
+        header('location:gateway.php');
+      }
+      // 1. verify whether the email is already registered
+      $h=fopen($file, 'r+');
+      $tryEmail = $data['email'];
+      $tryPass = $data['pass'];
+      while(!feof($h)){
+        $line=explode(';',trim(fgets($h)));
+        if(count($line)<2) continue;
+        if($line[0]==$tryEmail){
+          $found = 'found';
+          // 2. verify password matches
+          if(!password_verify($tryPass,$line[2])) {
+            $_SESSION['error_msg'] = 'The password does not match.';
+            header('location:gateway.php');
+            die();
+
+          }else{
+            // start the session and send the user to the members page
+            session_start();
+            $_SESSION['name']=$line[1];
+            header('location:goodtest.php');
+          }
+        }
+      }
+      fclose($h);
+      if($found != 'found'){
+        $_SESSION['error_msg'] = "$tryEmail is not registered. Did you use a different email?";
+        header('location:gateway.php');
+      }
+    }
 
 
 
