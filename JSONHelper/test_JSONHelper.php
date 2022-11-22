@@ -2,6 +2,8 @@
 
 require_once('JSONHelper.php');
 
+//This class should contain methods for reading, writing, updating, and deleting information in a JSON file. 
+
 // WRITE
 //JSONHelper::write('beatles.json.php',[['firstname'=>'John','lastname'=>'Lennon'],['firstname'=>'Paul','lastname'=>'McCartney']],false,true); // write a recordset to a JSON file
 //JSONHelper::write('beatles.json.php',['firstname'=>'George','lastname'=>'Harrison']); // append a record to a JSON file
